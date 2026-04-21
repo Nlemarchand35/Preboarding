@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { Button } from '@/components/ui/button'
 
 interface ConfirmButtonClientProps {
   token: string
@@ -34,42 +33,64 @@ export function ConfirmButtonClient({ token }: ConfirmButtonClientProps) {
 
   if (confirmed) {
     return (
-      <div className="bg-green-50 border border-green-200 rounded-2xl p-6 text-center">
-        <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
-          <svg className="w-6 h-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-          </svg>
+      <div className="bg-white rounded-2xl shadow-sm border border-green-100 p-6 text-center animate-celebration-in">
+        <div className="relative inline-flex mb-4">
+          <div className="absolute inset-0 rounded-full bg-green-400/20 animate-pulse-ring" />
+          <div className="w-14 h-14 bg-green-50 rounded-full flex items-center justify-center relative">
+            <svg className="w-7 h-7 text-green-500 animate-check-pop" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
         </div>
-        <p className="font-semibold text-green-800">Présence confirmée !</p>
-        <p className="text-sm text-green-600 mt-1">Merci, nous vous attendons avec impatience.</p>
+        <p className="font-bold text-gray-900 text-lg mb-1">C&apos;est confirmé !</p>
+        <p className="text-sm text-gray-500 leading-relaxed">
+          Votre présence est enregistrée.<br />Nous avons hâte de vous accueillir.
+        </p>
+        <div className="flex justify-center gap-2 mt-4">
+          <span className="w-2 h-2 bg-green-300 rounded-full animate-float-dot-1" />
+          <span className="w-2 h-2 bg-blue-300 rounded-full animate-float-dot-2" />
+          <span className="w-2 h-2 bg-green-300 rounded-full animate-float-dot-3" />
+        </div>
       </div>
     )
   }
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-2">
       {error && (
-        <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-sm text-red-700 text-center">
+        <p className="text-center text-sm text-red-600 bg-red-50 rounded-xl py-2.5 px-4">
           {error}
-        </div>
+        </p>
       )}
-      <Button
-        className="w-full h-12 text-base font-semibold rounded-2xl"
+      <button
+        type="button"
         onClick={handleConfirm}
         disabled={loading}
+        className="w-full h-14 rounded-2xl font-semibold text-base text-white transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:opacity-70 active:scale-[0.98]"
+        style={{
+          background: loading
+            ? '#3b82f6'
+            : 'linear-gradient(135deg, #1d4ed8 0%, #2563eb 50%, #3b82f6 100%)',
+          boxShadow: loading ? 'none' : '0 4px 20px rgba(37,99,235,0.35)',
+        }}
       >
         {loading ? (
-          <span className="flex items-center gap-2">
-            <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24" fill="none">
+          <span className="flex items-center justify-center gap-2.5">
+            <svg className="animate-spin h-5 w-5 text-white/80" viewBox="0 0 24 24" fill="none">
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
             </svg>
-            Confirmation en cours…
+            Confirmation…
           </span>
         ) : (
-          'Confirmer ma présence'
+          <span className="flex items-center justify-center gap-2">
+            Confirmer ma présence
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+          </span>
         )}
-      </Button>
+      </button>
     </div>
   )
 }
